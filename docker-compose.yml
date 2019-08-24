@@ -1,0 +1,20 @@
+version: '3'
+services:
+  web: # container name
+    build:
+      context: .     # app file on local machine
+      dockerfile: Dockerfile.dev    # specify the docker file name to be used
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules # ignore node_modules
+      - .:/app   # copy all working directory to the app container
+  
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
